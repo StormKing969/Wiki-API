@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sajana Wijesinghe",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.2",
