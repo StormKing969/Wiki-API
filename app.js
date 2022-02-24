@@ -28,14 +28,64 @@ const Article = mongoose.model("Article", articleSchema);
 
 // ==================== Schema Section End ========================
 
-// ==================== Get/Post Section Start ========================
+// ==================== Get/Post/Delete Section Start ========================
 
-// ==================== Get/Post Section End ========================
+app.get("/articles", function(req, res) {
+    Article.find({}, function(err, articlesFound) {
+        if(!err) {
+            res.send(articlesFound);
+        } else {
+            res.send(err);
+        }
+    })
+})
+
+
+app.post("/articles", function(req, res) {
+    const title = req.body.title;
+    const content = req.body.content;
+
+    updateArticle(title, content).save(function(err) {
+        if(!err) {
+            res.send("Update was successful");
+        } else {
+            res.send(err);
+        }
+    });
+
+})
+
+app.delete("/articles", function(req, res) {
+    Article.deleteMany(
+        {},
+        function(err) {
+            if(!err) {
+                res.send("Removal was successful");
+            } else {
+                res.send(err);
+            }
+        }
+    )
+})
+// ==================== Get/Post/Delete Section End ========================
 
 // ==================== Main Function Start ========================
 
 app.listen(port, () => {
-    console.log("Server started on port " + port)
+    console.log("Server started on port " + port);
 })
 
 // ==================== Main Function End ========================
+
+// ==================== Sub Function Start ========================
+
+function updateArticle(userTitle, userContent) {
+    const newArticle = new Article({
+        title: userTitle,
+        content: userContent
+    });
+
+    return newArticle;
+}
+
+// ==================== Sub Function End ========================
