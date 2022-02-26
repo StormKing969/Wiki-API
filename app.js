@@ -30,43 +30,81 @@ const Article = mongoose.model("Article", articleSchema);
 
 // ==================== Get/Post/Delete Section Start ========================
 
-app.get("/articles", function(req, res) {
-    Article.find({}, function(err, articlesFound) {
-        if(!err) {
-            res.send(articlesFound);
-        } else {
-            res.send(err);
-        }
-    })
-})
+// app.get("/articles", function(req, res) {
+//     Article.find({}, function(err, articlesFound) {
+//         if(!err) {
+//             res.send(articlesFound);
+//         } else {
+//             res.send(err);
+//         }
+//     })
+// })
 
 
-app.post("/articles", function(req, res) {
-    const title = req.body.title;
-    const content = req.body.content;
+// app.post("/articles", function(req, res) {
+//     const title = req.body.title;
+//     const content = req.body.content;
 
-    updateArticle(title, content).save(function(err) {
-        if(!err) {
-            res.send("Update was successful");
-        } else {
-            res.send(err);
-        }
-    });
+//     updateArticle(title, content).save(function(err) {
+//         if(!err) {
+//             res.send("Update was successful");
+//         } else {
+//             res.send(err);
+//         }
+//     });
 
-})
+// })
 
-app.delete("/articles", function(req, res) {
-    Article.deleteMany(
-        {},
-        function(err) {
+// app.delete("/articles", function(req, res) {
+//     Article.deleteMany(
+//         {},
+//         function(err) {
+//             if(!err) {
+//                 res.send("Removal was successful");
+//             } else {
+//                 res.send(err);
+//             }
+//         }
+//     )
+// })
+
+// ============= Route Chaining =============
+
+app.route("/articles")
+    .get(function(req, res) {
+        Article.find({}, function(err, articlesFound) {
             if(!err) {
-                res.send("Removal was successful");
+                res.send(articlesFound);
             } else {
                 res.send(err);
             }
-        }
-    )
-})
+        })
+    })
+    .post(function(req, res) {
+        const title = req.body.title;
+        const content = req.body.content;
+
+        updateArticle(title, content).save(function(err) {
+            if(!err) {
+                res.send("Update was successful");
+            } else {
+                res.send(err);
+            }
+        });
+
+    })
+    .delete(function(req, res) {
+        Article.deleteMany(
+            {},
+            function(err) {
+                if(!err) {
+                    res.send("Removal was successful");
+                } else {
+                    res.send(err);
+                }
+            }
+        )
+    });
 // ==================== Get/Post/Delete Section End ========================
 
 // ==================== Main Function Start ========================
