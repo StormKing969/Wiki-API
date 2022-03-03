@@ -114,12 +114,28 @@ app.route("/articles/:articleTitle")
     .get(function(req, res) {
         Article.findOne({title: req.params.articleTitle}, function(err, foundArticle) {
             if(!err) {
-                res.send(foundArticle);
+                if(foundArticle) {
+                    res.send(foundArticle);
+                } else {
+                    res.send("No articles matching that title was found");
+                }
             } else {
                 res.send(err);
             }
         })
-    });
+    })
+    .put(function(req, res) {
+        Article.updateOne(
+            {title: req.params.articleTitle},
+            {title: req.body.title, content: req.body.content},
+            function(err, foundArticle) {
+                if(!err) {
+                    res.send("Update was successful");
+                } else {
+                    res.send(err);
+                }
+            })
+    })
 
 // ============= Route Chaining To Specific Article End =============
     
