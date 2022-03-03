@@ -124,6 +124,7 @@ app.route("/articles/:articleTitle")
             }
         })
     })
+    // replaces the document with the new input
     .put(function(req, res) {
         Article.updateOne(
             {title: req.params.articleTitle},
@@ -135,7 +136,7 @@ app.route("/articles/:articleTitle")
                     res.send(err);
                 }
             })
-    })
+    });
 
 // ============= Route Chaining To Specific Article End =============
     
