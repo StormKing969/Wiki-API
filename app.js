@@ -110,16 +110,16 @@ app.route("/articles")
 
 // ============= Route Chaining To Specific Article Start =============
 
-app.route("/")
+app.route("/articles/:articleTitle")
     .get(function(req, res) {
-        Article.find({}, function(err, articlesFound) {
+        Article.findOne({title: req.params.articleTitle}, function(err, foundArticle) {
             if(!err) {
-                res.send(articlesFound);
+                res.send(foundArticle);
             } else {
                 res.send(err);
             }
         })
-    })
+    });
 
 // ============= Route Chaining To Specific Article End =============
     
