@@ -123,7 +123,7 @@ function updateArticle(userTitle, userContent) {
         content: userContent
     });
 
-    return newArticle;
+    return 
 }
 
 // ==================== Sub Function End ========================
