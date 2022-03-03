@@ -1,4 +1,4 @@
-// ==================== Setup Section Start ========================
+////////////////////// Setup Section Start //////////////////////
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,9 +15,9 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/wikiDB");
 
-// ==================== Setup Section End ========================
+////////////////////// Setup Section End //////////////////////
 
-// ==================== Schema  Section Start ========================
+////////////////////// Schema  Section Start //////////////////////
 
 const articleSchema = {
     title: String,
@@ -26,9 +26,9 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
-// ==================== Schema Section End ========================
+////////////////////// Schema Section End //////////////////////
 
-// ==================== Get/Post/Delete Section Start ========================
+////////////////////// Get/Post/Delete Section Start //////////////////////
 
 // app.get("/articles", function(req, res) {
 //     Article.find({}, function(err, articlesFound) {
@@ -68,7 +68,7 @@ const Article = mongoose.model("Article", articleSchema);
 //     )
 // })
 
-// ============= Route Chaining =============
+// ============= Route Chaining To All Articles Start =============
 
 app.route("/articles")
     .get(function(req, res) {
@@ -105,17 +105,35 @@ app.route("/articles")
             }
         )
     });
-// ==================== Get/Post/Delete Section End ========================
 
-// ==================== Main Function Start ========================
+// ============= Route Chaining To All Articles End =============
+
+// ============= Route Chaining To Specific Article Start =============
+
+app.route("/")
+    .get(function(req, res) {
+        Article.find({}, function(err, articlesFound) {
+            if(!err) {
+                res.send(articlesFound);
+            } else {
+                res.send(err);
+            }
+        })
+    })
+
+// ============= Route Chaining To Specific Article End =============
+    
+////////////////////// Get/Post/Delete Section End //////////////////////
+
+////////////////////// Main Function Start //////////////////////
 
 app.listen(port, () => {
     console.log("Server started on port " + port);
 })
 
-// ==================== Main Function End ========================
+////////////////////// Main Function End //////////////////////
 
-// ==================== Sub Function Start ========================
+////////////////////// Sub Function Start //////////////////////
 
 function updateArticle(userTitle, userContent) {
     const newArticle = new Article({
@@ -123,7 +141,7 @@ function updateArticle(userTitle, userContent) {
         content: userContent
     });
 
-    return 
+    return newArticle;
 }
 
-// ==================== Sub Function End ========================
+////////////////////// Sub Function End //////////////////////
