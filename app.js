@@ -131,7 +131,7 @@ app.route("/articles/:articleTitle")
             {title: req.body.title, content: req.body.content},
             function(err, foundArticle) {
                 if(!err) {
-                    res.send("Update was successful");
+                    res.send("Entire article was successfully changed");
                 } else {
                     res.send(err);
                 }
@@ -144,7 +144,7 @@ app.route("/articles/:articleTitle")
             {$set: req.body},
             function(err, foundArticle) {
                 if(!err) {
-                    res.send("Update successful");
+                    res.send("Specific change successful");
                 } else {
                     res.send(err);
                 }
