@@ -136,6 +136,20 @@ app.route("/articles/:articleTitle")
                     res.send(err);
                 }
             })
+    })
+    // replace only the content the user wants to change
+    .patch(function(req,res) {
+        Article.updateOne(
+            {title: req.params.articleTitle},
+            {$set: req.body},
+            function(err, foundArticle) {
+                if(!err) {
+                    res.send("Update successful");
+                } else {
+                    res.send(err);
+                }
+            }
+        )
     });
 
 // ============= Route Chaining To Specific Article End =============
