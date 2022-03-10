@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const { handle } = require("express/lib/application");
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -136,6 +137,19 @@ app.route("/articles/:articleTitle")
                     res.send(err);
                 }
             })
+    })
+    // deletes the document in the database
+    .delete(function(req, res) {
+        Article.deleteOne(
+            {title: req.params.articleTitle},
+            function (err) { 
+                if(err) {
+                    res.send(err);
+                } else {
+                    res.send("Removal was successful");
+                }
+            }
+        )   
     })
     // replace only the content the user wants to change
     .patch(function(req,res) {
